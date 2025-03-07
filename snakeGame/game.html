@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Snake Game</title>
+  <link rel="stylesheet" href="game.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+
+     <!-- Floating Animations (5 Butterflies at the top) -->
+     <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+
+    <!-- Floating Animations (5 Butterflies at the bottom) -->
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <!-- <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div> -->
+
+  <div class="game-container">
+    <h1>Cozy Snake Game</h1>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="game-level" id="gameLevel">Loading level...</div>
+    <button class="restart-btn" id="restartBtn" onclick="startNewGame()">Restart</button>
+  </div>
+
+  <script>
+    // Get the level from localStorage
+    const level = localStorage.getItem('level') || 'easy'; 
+    let snakeSpeed = 100; 
+
+    
+    if (level === 'medium') snakeSpeed = 80;
+    if (level === 'hard') snakeSpeed = 60;
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let snake = [{ x: 50, y: 50 }]; 
+    let food = { x: 100, y: 100 }; 
+    let direction = 'RIGHT'; 
+    let score = 0;
+
+    const gridSize = 10;
+    const canvasSize = 300;
+
+    
+    let gameInterval;
+
+    function startGame() {
+      // Initialize the game
+      snake = [{ x: 50, y: 50 }];
+      food = generateFood();
+      score = 0;
+      direction = 'RIGHT';
+      document.getElementById('score').textContent = score;
+
+      // Clear any previous intervals
+      clearInterval(gameInterval);
+      gameInterval = setInterval(gameLoop, snakeSpeed); 
+    }
+
+    function generateFood() {
+      return {
+        x: Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize,
+        y: Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize
+      };
+    }
+
+    function gameLoop() {
+      moveSnake();
+      if (checkCollision()) {
+        clearInterval(gameInterval);
+        alert('Game Over! Your score was ' + score);
+        window.location.href = 'select.html'; // Redirect to the select page immediately
+      } else {
+        drawGame();
+      }
+    }
+
+    function moveSnake() {
+      let head = { ...snake[0] };
+
+      if (direction === 'UP') head.y -= gridSize;
+      if (direction === 'DOWN') head.y += gridSize;
+      if (direction === 'LEFT') head.x -= gridSize;
+      if (direction === 'RIGHT') head.x += gridSize;
+
+      snake.unshift(head);
+
+      // Check if snake eats food
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        document.getElementById('score').textContent = score;
+        food = generateFood(); 
+      } else {
+        snake.pop(); 
+      }
+    }
+
+    function drawGame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the snake
+      ctx.fillStyle = '#ff80bf'; 
+      snake.forEach(part => {
+        ctx.fillRect(part.x, part.y, gridSize, gridSize);
+      });
+
+      // Draw the food
+      ctx.fillStyle = '#F0A8B5'; 
+      ctx.fillRect(food.x, food.y, gridSize, gridSize);
+    }
+
+    function checkCollision() {
+      let head = snake[0];
+
+      // Wall collision
+      if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
+        return true;
+      }
+
+      // Self collision
+      for (let i = 1; i < snake.length; i++) {
+        if (head.x === snake[i].x && head.y === snake[i].y) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // Control the snake with arrow keys
+    window.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+      if (event.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+      if (event.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+      if (event.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+    });
+
+    function startNewGame() {
+      startGame();
+    }
+
+    // Start the game when the page loads
+    startGame();
+
+    // Set the selected level text
+    const selectedLevel = localStorage.getItem('select') || level;
+    document.getElementById('gameLevel').innerText = "You selected: " + selectedLevel;
+
+    // Function to change background gradient every 3 seconds
+    let currentGradientIndex = 0;
+    const gradients = [
+      'linear-gradient(45deg, #F1C1B6, #F9C5D1, #F1C1B6)', 
+      'linear-gradient(45deg, #F1C1B6, #F9C5D1, #F1C1B6)', 
+      'linear-gradient(45deg, #F1C1B6, #F9C5D1, #F1C1B6)'
+    ];
+
+    function changeBackground() {
+      currentGradientIndex = (currentGradientIndex + 1) % gradients.length;
+      document.body.style.background = gradients[currentGradientIndex];
+    }
+
+    // Set an interval to change the background every 3 seconds
+    setInterval(changeBackground, 3000); 
+
+  </script>
+
+</body>
+</html>

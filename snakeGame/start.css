@@ -1,0 +1,150 @@
+
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            background: linear-gradient(135deg, #ff99cc, #ffb3d9); 
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #F6A8B2;
+            overflow: hidden;
+            position: relative;
+            animation: gradientAnimation 10s infinite alternate;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(135deg, #ff99cc, #ffb3d9); }
+            50% { background: linear-gradient(135deg, #ffccff, #ff66b2); }
+            100% { background: linear-gradient(135deg, #ff7f99, #ff99cc); }
+        }
+
+      
+h1 {
+    font-size: 3em;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Verdana', sans-serif;
+    text-align: center;
+    text-shadow: 0 4px 6px rgba(255, 127, 153, 0.3);
+    z-index: 10;
+    animation: fadeInTitle 3s ease-out, textFloating 3s ease-in-out infinite;
+}
+
+
+@keyframes textFloating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
+
+       
+.start-btn {
+    background-color: #F6A8B2;
+    color: #fff;
+    border: none;
+    font-size: 1.6em;
+    padding: 20px 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(255, 102, 178, 0.6);
+    position: absolute;
+    bottom: 35%;
+    animation: floating 3s ease-in-out infinite;
+}
+
+
+.start-btn:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 20px rgba(255, 102, 178, 0.8);
+    animation: none; 
+}
+
+/* Floating effect animation */
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+
+        /* Level screen styling */
+        #levelScreen {
+            display: none;
+            margin-top: 30px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .level-btn {
+            background-color: #ffb3d9;
+            color: #F6A8B2;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 1.3em;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .level-btn:hover {
+            background-color: #F6A8B2;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Animation for butterflies */
+        .butterfly {
+            position: absolute;
+            animation: floating 7s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { transform: translateY(-30px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0; }
+        }
+
+        .butterfly img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Positioning for floating butterflies at the top */
+        .butterfly.top:nth-child(1) { top: 10%; left: 50%; animation-duration: 7s; }
+        .butterfly.top:nth-child(2) { top: 10%; left: 70%; animation-duration: 8s; animation-delay: 1s; }
+        .butterfly.top:nth-child(3) { top: 10%; left: 30%; animation-duration: 6s; animation-delay: 1.5s; }
+        .butterfly.top:nth-child(4) { top: 10%; left: 20%; animation-duration: 7.5s; animation-delay: 2s; }
+        .butterfly.top:nth-child(5) { top: 10%; left: 60%; animation-duration: 9s; animation-delay: 2.5s; }
+
+        /* Positioning for floating butterflies at the bottom */
+        .butterfly.bottom:nth-child(6) { bottom: 10%; left: 40%; animation-duration: 6s; animation-delay: 3s; }
+        .butterfly.bottom:nth-child(7) { bottom: 10%; left: 80%; animation-duration: 8s; animation-delay: 3.5s; }
+        .butterfly.bottom:nth-child(8) { bottom: 10%; left: 10%; animation-duration: 9s; animation-delay: 4s; }
+        .butterfly.bottom:nth-child(9) { bottom: 10%; left: 10%; animation-duration: 7s; animation-delay: 4.5s; }
+
+        @media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+    .start-btn, .level-btn {
+        font-size: 1.2em;
+        padding: 12px 25px;
+        bottom: 30%;
+    }
+}
+
+  

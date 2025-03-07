@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="select.css">
+    <title>Level Selection</title>
+  
+</head>
+<body>
+    <!-- Floating Animations (5 Butterflies at the top) -->
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly top">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+
+    <!-- Floating Animations (5 Butterflies at the bottom) -->
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div>
+    <!-- <div class="butterfly bottom">
+        <img src="https://img.icons8.com/ios/452/butterfly.png" alt="Butterfly">
+    </div> -->
+
+    <!-- Level Selection Title -->
+    <h1>Select Game Level</h1>
+
+    <!-- Level Buttons -->
+    <button class="level-btn" onclick="startLevel(1)">Easy</button>
+    <button class="level-btn" onclick="startLevel(2)">Medium</button>
+    <button class="level-btn" onclick="startLevel(3)">Hard</button>
+
+    <script>
+        function startLevel(level) {
+            localStorage.setItem('level', level); 
+            window.location.href = 'game.html'; 
+        }
+    </script>
+    
+</body>
+</html>
